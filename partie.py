@@ -11,6 +11,7 @@ class Partie:
         joueurs (list): La liste des joueurs.
     """
 
+
     def __init__(self, joueurs): # **** a completer ****
         """Initialise une partie avec la liste de joueurs
 
