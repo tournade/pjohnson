@@ -2,7 +2,7 @@ from joueur import Joueur
 from combinaison import Combinaison
 from random import shuffle
 
-
+#changement a enlever
 
 class Partie:
     """Représente une partie du jeu de Poker d'As
