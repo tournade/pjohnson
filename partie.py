@@ -17,7 +17,7 @@ class Partie:
         Args:
             joueurs (list): La liste des joueurs.
         """
-
+        self.joueurs = joueurs
 
     def jouer_partie(self): # **** a completer ****
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
@@ -35,9 +35,13 @@ class Partie:
             [2, 1, 0] indique que joueur 3 joue, suivi du joueur 2, puis du
             joueur 1.
         """
+        random_list = []
+        for i in range(0,len(self.joueurs)):
+            random_list.append(i)
 
-
-
+        shuffle(random_list)
+        print(random_list)
+        return random_list
 
 #***************************
 # vous n etes pas obligés de garder ces tests - ils sont là pour vous aider a comprendre les methodes

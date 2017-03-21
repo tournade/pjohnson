@@ -16,6 +16,7 @@ class Joueur:
         Args:
             nom (str): Le nom du joueur.
         """
+        self.nom = nom
 
 
 
