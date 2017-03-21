@@ -17,6 +17,8 @@ class Joueur:
             nom (str): Le nom du joueur.
         """
         self.nom = nom
+        self.nb_victoires = 0
+        self.nb_parties_jouees = 0
 
 
 
@@ -37,4 +39,4 @@ class Joueur:
         Returns (str): La chaîne de caractères représentant le joueur.
 
         """
-
+        return self.nom
