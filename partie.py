@@ -33,6 +33,7 @@ class Partie:
             player += 1
 
 
+
     def _determiner_ordre(self): # **** a completer ****
         """Détermine l'ordre dans lequel les joueurs vont jouer.
         Return (list): La liste des index des joueurs indiquant l'ordre.
