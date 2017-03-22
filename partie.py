@@ -25,6 +25,12 @@ class Partie:
         Le compteur de victoires est incrémenté pour le joueur gagnant (si la partie n'est pas nulle).
         Le joueur gagnant est affiché à l'écran (ou un message indiquant que la partie est nulle, s'il y a lieu).
         """
+        print ("L'ordre est tiré au hasard")
+        ordre = self._determiner_ordre()
+        player = 1
+        for i in ordre:
+            print("Le joueur", player, "est", self.joueurs[i])
+            player += 1
 
 
     def _determiner_ordre(self): # **** a completer ****
@@ -40,7 +46,6 @@ class Partie:
             random_list.append(i)
 
         shuffle(random_list)
-        print(random_list)
         return random_list
 
 #***************************
