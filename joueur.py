@@ -13,12 +13,13 @@ class Joueur:
         """
         Initialise un nouveau joueur avec son nom.
 
-        Args:
+        Args:0
             nom (str): Le nom du joueur.
         """
         self.nom = nom
         self.nb_victoires = 0
         self.nb_parties_jouees = 0
+
 
 
 
@@ -31,7 +32,12 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
-
+        self.combinaison_des = Combinaison(des=5)
+        print(self.combinaison_des)
+        while(limite_lancers != self.combinaison_des.nb_lancers and self.combinaison_des.nb_lancers != 3 ):
+            selection = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5) : ")
+            self.combinaison_des.nb_lancers += 1
+            print(self.combinaison_des)
 
     def __str__(self): # **** a completer ****
         """

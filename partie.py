@@ -18,6 +18,7 @@ class Partie:
             joueurs (list): La liste des joueurs.
         """
         self.joueurs = joueurs
+        self.nombre_de_lancer = 0
 
     def jouer_partie(self): # **** a completer ****
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
@@ -28,9 +29,14 @@ class Partie:
         print ("L'ordre est tiré au hasard")
         ordre = self._determiner_ordre()
         player = 1
+        print()
         for i in ordre:
             print("Le joueur", player, "est", self.joueurs[i])
             player += 1
+        print()
+        for i in ordre:
+            print("C'est au tour de", self.joueurs[i])
+            self.joueurs[i].jouer_tour(self.nombre_de_lancer)
 
 
 

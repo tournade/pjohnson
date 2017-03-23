@@ -16,6 +16,8 @@ class Combinaison:
 
     def __init__(self, des = None): # **** a completer ****
         """Initialise une combinaison"""
+        self.combinaison = self._lancer_des(des)
+        self.nb_lancers = 1
 
 
     def relancer_des(self, index_a_relancer): # **** a completer ****
@@ -54,13 +56,17 @@ class Combinaison:
         Args:
             n (int): Le nombre de dés à lancer.
         """
-
+        list_de = []
+        for y in range(0, n):
+            list_de.append(choice(self.types_de))
+        return list_de
 
     def __str__(self): # **** a completer ****
         '''
         a vous de voir comment definir et utiliser
         :return: a definir selon vos besoins
         '''
+        return "\nVoici votre combinaison:\nDés:     1  2  3  4  5\nValeur:  "+str(self.combinaison[0]) + "  " + str(self.combinaison[1]) + "  " + str(self.combinaison[2]) + "  " + str(self.combinaison[3]) + "  " + str(self.combinaison[4]) + "\n"
 
 
 
