@@ -36,8 +36,9 @@ class Partie:
         print()
         for i in ordre:
             print("C'est au tour de", self.joueurs[i])
-            self.joueurs[i].jouer_tour(self.nombre_de_lancer)
-
+            combinaison_final = self.joueurs[i].jouer_tour(self.nombre_de_lancer)
+            if self.nombre_de_lancer == 0:
+                self.nombre_de_lancer = self.joueurs[i].combinaison_des.nb_lancers
 
 
     def _determiner_ordre(self): # **** a completer ****

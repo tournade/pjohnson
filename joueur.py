@@ -34,10 +34,18 @@ class Joueur:
         """
         self.combinaison_des = Combinaison(des=5)
         print(self.combinaison_des)
-        while(limite_lancers != self.combinaison_des.nb_lancers and self.combinaison_des.nb_lancers != 3 ):
+        continuer = True
+        while(limite_lancers != self.combinaison_des.nb_lancers and self.combinaison_des.nb_lancers != 3 and continuer ):
             selection = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5) : ")
-            self.combinaison_des.nb_lancers += 1
-            print(self.combinaison_des)
+            if selection == "0":
+                continuer = False
+            else:
+                emplacement_de = selection.split(",")
+                self.combinaison_des.relancer_des(emplacement_de)
+                print(self.combinaison_des)
+        self.resultat = self.combinaison_des.determiner_type_combinaison()
+        print(self.nom,"a eu",self.resultat)
+        return self.combinaison_des.des
 
     def __str__(self): # **** a completer ****
         """

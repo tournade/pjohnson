@@ -14,9 +14,9 @@ class Combinaison:
         Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF
     ]
 
-    def __init__(self, des = None): # **** a completer ****
+    def __init__(self, des = 5): # **** a completer ****
         """Initialise une combinaison"""
-        self.combinaison = self._lancer_des(des)
+        self.des = self._lancer_des(des)
         self.nb_lancers = 1
 
 
@@ -25,13 +25,52 @@ class Combinaison:
         Args:
             index_a_relancer (list): Liste des index des dés à relancer.
         """
-
+        compteur = 0
+        if index_a_relancer[0] != '':
+            new_de = self._lancer_des(len(index_a_relancer))
+            self.nb_lancers += 1
+            for x in index_a_relancer:
+                self.des[int(x) - 1] = new_de[compteur]
+                compteur += 1
 
     def determiner_type_combinaison(self): # **** a completer ****
         """Détermine le type de la combinaison.
 
         Return (TypeCombinaison): Le type de la combinaison.
         """
+        self.des_combinaison = [0] * 6  # 6 car six valeurs sur le dé
+        for i in range(len(self.des)):
+            self.des_combinaison[self.des[i].value] += 1
+
+        maximun = max(self.des_combinaison[1:])
+        if self.des_combinaison[1:].count(1) != 4:
+            for i in range(len(self.des_combinaison[1:])):
+              if self.des_combinaison[1:][i] == maximun:
+                  self.des_combinaison[i + 1] += self.des_combinaison[0]
+                  self.des_combinaison[0] = 0
+
+        if 5 in self.des_combinaison:
+            return (TypeCombinaison.QUINTON)
+
+        if 4 in self.des_combinaison:
+            return (TypeCombinaison.CARRE)
+
+        if 3 in self.des_combinaison and 2 in self.des_combinaison:
+            return (TypeCombinaison.FULL)
+
+        if 3 in self.des_combinaison and 2 not in self.des_combinaison:
+            return (TypeCombinaison.BRELAN)
+
+        if self.des_combinaison.count(1) == 5:
+            return (TypeCombinaison.SEQUENCE)
+
+        if self.des_combinaison.count(2) == 2:
+            return (TypeCombinaison.DEUX_PAIRES)
+
+        if self.des_combinaison.count(2) == 1 and 3 not in self.des_combinaison:
+            return (TypeCombinaison.UNE_PAIRE)
+
+        return (TypeCombinaison.AUTRE)  # tous les if sont donc False
 
 
     @staticmethod
@@ -66,7 +105,7 @@ class Combinaison:
         a vous de voir comment definir et utiliser
         :return: a definir selon vos besoins
         '''
-        return "\nVoici votre combinaison:\nDés:     1  2  3  4  5\nValeur:  "+str(self.combinaison[0]) + "  " + str(self.combinaison[1]) + "  " + str(self.combinaison[2]) + "  " + str(self.combinaison[3]) + "  " + str(self.combinaison[4]) + "\n"
+        return "\nVoici votre combinaison:\nDés:     1  2  3  4  5\nValeur:  "+str(self.des[0]) + "  " + str(self.des[1]) + "  " + str(self.des[2]) + "  " + str(self.des[3]) + "  " + str(self.des[4]) + "\n"
 
 
 
@@ -83,7 +122,7 @@ if __name__ == "__main__":
     assert combinaison.nb_lancers == 1
 
     # Test de relancer_des
-    combinaison.relancer_des([])
+    combinaison.relancer_des([''])
     assert combinaison.nb_lancers == 1
     anciens_des = list(combinaison.des)
     combinaison.relancer_des([3, 4])
@@ -106,31 +145,22 @@ if __name__ == "__main__":
 
     combinaisons = [
              # Combinaisons avec As
-            ([Carte.AS, Carte.AS, Carte.AS, Carte.AS, Carte.AS],
-             TypeCombinaison.QUINTON),
-             ([Carte.ROI, Carte.AS, Carte.VALET, Carte.DIX, Carte.NEUF],
-              TypeCombinaison.SEQUENCE),
+             ([Carte.AS, Carte.AS, Carte.AS, Carte.AS, Carte.AS], TypeCombinaison.QUINTON),
+             ([Carte.ROI, Carte.AS, Carte.VALET, Carte.DIX, Carte.NEUF], TypeCombinaison.SEQUENCE),
              ([Carte.VALET] * 4 + [Carte.AS], TypeCombinaison.QUINTON),
              ([Carte.VALET] * 3 + [Carte.AS, Carte.ROI], TypeCombinaison.CARRE),
-             ([Carte.VALET] * 2 + [Carte.ROI, Carte.AS, Carte.ROI],
-              TypeCombinaison.FULL),
-             ([Carte.VALET] * 2 + [Carte.ROI, Carte.AS, Carte.DAME],
-              TypeCombinaison.BRELAN),
-             ([Carte.ROI, Carte.DAME, Carte.AS, Carte.DIX, Carte.NEUF],
-              TypeCombinaison.SEQUENCE),
+             ([Carte.VALET] * 2 + [Carte.ROI, Carte.AS, Carte.ROI], TypeCombinaison.FULL),
+             ([Carte.VALET] * 2 + [Carte.ROI, Carte.AS, Carte.DAME], TypeCombinaison.BRELAN),
+             ([Carte.ROI, Carte.DAME, Carte.AS, Carte.DIX, Carte.NEUF], TypeCombinaison.SEQUENCE),
              # Combinaisons sans As
              ([Carte.VALET] * 5, TypeCombinaison.QUINTON),
              ([Carte.VALET] * 4 + [Carte.ROI], TypeCombinaison.CARRE),
              ([Carte.VALET] * 3 + [Carte.ROI] * 2, TypeCombinaison.FULL),
              ([Carte.VALET] * 3 + [Carte.ROI, Carte.DAME], TypeCombinaison.BRELAN),
-             ([Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX],
-              TypeCombinaison.SEQUENCE),
-             ([Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF],
-              TypeCombinaison.SEQUENCE),
-             ([Carte.ROI, Carte.ROI, Carte.VALET, Carte.VALET, Carte.NEUF],
-              TypeCombinaison.DEUX_PAIRES),
-             ([Carte.ROI, Carte.ROI, Carte.DIX, Carte.VALET, Carte.NEUF],
-              TypeCombinaison.UNE_PAIRE)
+             ([Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX], TypeCombinaison.SEQUENCE),
+             ([Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF], TypeCombinaison.SEQUENCE),
+             ([Carte.ROI, Carte.ROI, Carte.VALET, Carte.VALET, Carte.NEUF], TypeCombinaison.DEUX_PAIRES),
+             ([Carte.ROI, Carte.ROI, Carte.DIX, Carte.VALET, Carte.NEUF], TypeCombinaison.UNE_PAIRE)
              ]
 
     for des, vrai_type in combinaisons:
