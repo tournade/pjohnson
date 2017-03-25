@@ -29,6 +29,7 @@ class Partie:
         print ("L'ordre est tiré au hasard")
         ordre = self._determiner_ordre()
         player = 1
+        resultat_list = []
         print()
         for i in ordre:
             print("Le joueur", player, "est", self.joueurs[i])
@@ -39,7 +40,20 @@ class Partie:
             combinaison_final = self.joueurs[i].jouer_tour(self.nombre_de_lancer)
             if self.nombre_de_lancer == 0:
                 self.nombre_de_lancer = self.joueurs[i].combinaison_des.nb_lancers
+            resultat_list.append((self.joueurs[i].nom,self.joueurs[i].resultat))
+            print()
+        gagnant = Combinaison.determiner_meilleur_combinaison(resultat_list)
+        for player_gagnant in self.joueurs:
+            player_gagnant.nb_parties_jouees += 1
+            if gagnant[0] == player_gagnant.nom:
+                player_gagnant.nb_victoires += 1
 
+        if gagnant[1] == None:
+            print("la parti est null")
+        else:
+            print("le gagnant est", gagnant[0], "avec un", gagnant[1])
+
+        print()
 
     def _determiner_ordre(self): # **** a completer ****
         """Détermine l'ordre dans lequel les joueurs vont jouer.

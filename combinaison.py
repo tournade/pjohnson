@@ -87,7 +87,16 @@ class Combinaison:
 
         """
 
+        resultat_gagnant =(None,None)
+        max_resultat = 0
+        for main in combinaisons:
+            if main[1].value > max_resultat:
+                max_resultat = main[1].value
+                resultat_gagnant = main
+            elif main[1].value == max_resultat:
+                resultat_gagnant = (None, None)
 
+        return resultat_gagnant
 
     def _lancer_des(self, n): # **** a completer ****
         """Lance n dés.
